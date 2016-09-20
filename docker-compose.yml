@@ -14,6 +14,18 @@ services:
             - 8000:80
 
     #####################
+    # ADMINER
+    #####################
+    adminer:
+        image: dehy/adminer:latest
+        ports:
+            - 3333:80
+        depends_on:
+            - db
+        links:
+            - db
+
+    #####################
     # DATABASE
     #####################
     db:
