@@ -21,23 +21,18 @@ RUN { \
 # APACHE CUSTOM USER
 RUN useradd -ms /bin/bash martin \
     && sed -i -e 's/www-data/martin/g' /etc/apache2/envvars \
-    && sed -i -e 's/www-data/martin/g' /etc/apache2/apache2.conf
+    && sed -i -e 's/www-data/martin/g' /etc/apache2/apache2.conf \
+    && sed -i -e 's/html/html\/public/g' /etc/apache2/sites-enabled/000-default.conf
 
 VOLUME /var/www/html
 
-# INSTALL COMPOSER
+# INSTALL COMPOSER + PACKAGES
 RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
-
-# INSTALL COMPOSER PACKAGES
-RUN composer global require "hirak/prestissimo:^0.3" \
-    && composer global require "laravel/installer"
-
-# LARAVEL INSTALLER TO PATH
-RUN ln -s /root/.composer/vendor/bin/laravel /usr/local/bin/laravel
+    && mv composer.phar /usr/local/bin/composer \
+    && composer global require "hirak/prestissimo:^0.3"
 
 # APACHE WITH CUSTOM USER
-RUN chown -R martin:martin /var/www/html/
+RUN chown -R martin:martin /var/www/html/ -R
 
 # DOCKER
 COPY docker-entrypoint.sh /entrypoint.sh
