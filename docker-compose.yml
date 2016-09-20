@@ -17,9 +17,9 @@ services:
     # DATABASE
     #####################
     db:
-        container_name: october-db
         image         : mariadb:latest
         volumes       :
             - ./database:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=laravel
