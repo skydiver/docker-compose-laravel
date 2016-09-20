@@ -1,0 +1,25 @@
+version: '2'
+services:
+
+    #####################
+    # LARAVEL
+    #####################
+    laravel:
+        build         : ./build/
+        links         :
+            - db
+        volumes       :
+            - ./html/:/var/www/html/
+        ports:
+            - 8000:80
+
+    #####################
+    # DATABASE
+    #####################
+    db:
+        container_name: october-db
+        image         : mariadb:latest
+        volumes       :
+            - ./database:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
