@@ -5,10 +5,10 @@ services:
     # LARAVEL
     #####################
     laravel:
-        build         : ./build/
-        links         :
+        build: ./build/
+        links:
             - db
-        volumes       :
+        volumes:
             - ./html/:/var/www/html/
         ports:
             - 8000:80
@@ -29,9 +29,18 @@ services:
     # DATABASE
     #####################
     db:
-        image         : mariadb:latest
-        volumes       :
+        image: mariadb:latest
+        volumes:
             - ./database:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=laravel
+
+    #####################
+    # MAILHOG
+    #####################
+    mailhog:
+        image: mailhog/mailhog
+        ports:
+          - 8125:1025
+          - 8025:8025
